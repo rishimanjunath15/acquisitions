@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Acquisitions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sign In</h1>
+            <nav>
+                <a href="index.html" class="btn btn-secondary">Back to Home</a>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="form-container">
+                <form id="signin-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                    
+                    <div id="message" class="message"></div>
+                </form>
+                
+                <p class="text-center">
+                    Don't have an account? <a href="signup.html">Sign Up</a>
+                </p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="auth.js"></script>
+    <script>
+        document.getElementById('signin-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            await signIn(email, password);
+        });
+    </script>
+</body>
+</html>
