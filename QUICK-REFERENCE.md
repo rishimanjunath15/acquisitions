@@ -3,10 +3,11 @@
 ## 📁 Project Structure
 
 ### **🏠 Root Level - Configuration & Documentation**
+
 ```
 📄 Configuration Files:
 ├── package.json              # Node.js dependencies & scripts
-├── Dockerfile               # Container configuration  
+├── Dockerfile               # Container configuration
 ├── docker-compose.dev.yml   # Development environment
 ├── docker-compose.prod.yml  # Production environment
 ├── eslint.config.js         # Code linting rules
@@ -24,11 +25,12 @@
 🚀 Scripts:
 ├── test-cicd.ps1           # CI/CD pipeline testing
 ├── quick-setup.ps1         # Quick project setup
-├── start-dev.ps1           # Start development server  
+├── start-dev.ps1           # Start development server
 └── test-docker.ps1         # Docker testing
 ```
 
 ### **💻 Source Code - Main Application**
+
 ```
 src/
 ├── 🎯 app.js              # Express app configuration
@@ -37,7 +39,7 @@ src/
 ├── 🔄 migrate.js          # Database migrations
 │
 ├── config/                # 🔧 Configuration modules
-│   ├── arcjet.js         # Security configuration  
+│   ├── arcjet.js         # Security configuration
 │   ├── database.js       # Database connection
 │   └── logger.js         # Logging setup
 │
@@ -71,11 +73,12 @@ src/
 ```
 
 ### **🌐 Frontend & Assets**
+
 ```
 public/                    # Static web files
 ├── 🏠 index.html          # Landing page
 ├── 🔐 signin.html         # Sign-in page
-├── 📝 signup.html         # Sign-up page  
+├── 📝 signup.html         # Sign-up page
 ├── ✅ welcome.html        # Welcome page
 ├── 🎨 styles.css          # Styling
 ├── ⚡ common.js           # Shared JavaScript
@@ -84,6 +87,7 @@ public/                    # Static web files
 ```
 
 ### **🧪 Testing & Quality**
+
 ```
 tests/                     # Test files
 └── 📊 app.test.js         # Application tests
@@ -94,7 +98,8 @@ coverage/                  # Test coverage reports
 └── 📊 lcov-report/       # HTML coverage report
 ```
 
-### **🗄️ Database & Storage** 
+### **🗄️ Database & Storage**
+
 ```
 drizzle/                   # Database migrations
 ├── 🔄 *.sql              # Migration files
@@ -108,6 +113,7 @@ logs/                      # Application logs
 ```
 
 ### **🚀 DevOps & Automation**
+
 ```
 .github/workflows/         # GitHub Actions CI/CD
 ├── 🐳 docker-build-and-push.yml # Docker deployment
@@ -116,7 +122,7 @@ logs/                      # Application logs
 
 scripts/                   # Automation scripts
 ├── 🛠️ dev.sh             # Development setup
-├── 🚀 prod.sh            # Production deployment  
+├── 🚀 prod.sh            # Production deployment
 └── 🧪 smoke-tests.sh     # Post-deploy validation
 ```
 
