@@ -1,5 +1,127 @@
 # Quick Reference Card
 
+## 📁 Project Structure
+
+### **🏠 Root Level - Configuration & Documentation**
+```
+📄 Configuration Files:
+├── package.json              # Node.js dependencies & scripts
+├── Dockerfile               # Container configuration  
+├── docker-compose.dev.yml   # Development environment
+├── docker-compose.prod.yml  # Production environment
+├── eslint.config.js         # Code linting rules
+├── jest.config.mjs          # Testing configuration
+├── drizzle.config.js        # Database ORM config
+└── .env                     # Environment variables
+
+📋 Documentation:
+├── README.md                # Main project documentation
+├── QUICK-REFERENCE.md       # This file - quick commands
+├── CICD-SETUP.md           # CI/CD pipeline guide
+├── DOCKER-SETUP.md         # Docker setup instructions
+└── DISTRIBUTION-README.md   # Distribution guide
+
+🚀 Scripts:
+├── test-cicd.ps1           # CI/CD pipeline testing
+├── quick-setup.ps1         # Quick project setup
+├── start-dev.ps1           # Start development server  
+└── test-docker.ps1         # Docker testing
+```
+
+### **💻 Source Code - Main Application**
+```
+src/
+├── 🎯 app.js              # Express app configuration
+├── 🚀 index.js            # Application entry point
+├── 🗄️ server.js           # Server startup
+├── 🔄 migrate.js          # Database migrations
+│
+├── config/                # 🔧 Configuration modules
+│   ├── arcjet.js         # Security configuration  
+│   ├── database.js       # Database connection
+│   └── logger.js         # Logging setup
+│
+├── controllers/           # 🎮 Request handlers
+│   ├── auth.controller.js    # Authentication logic
+│   └── users.controller.js   # User management
+│
+├── middleware/            # ⚙️ Express middleware
+│   ├── auth.middleware.js    # Authentication checks
+│   └── security.middleware.js # Security headers
+│
+├── models/                # 📊 Data models
+│   └── user.model.js     # User data structure
+│
+├── routes/                # 🛣️ API endpoints
+│   ├── auth.routes.js    # Authentication routes
+│   └── users.routes.js   # User routes (/api/users)
+│
+├── services/              # 💼 Business logic
+│   ├── auth.service.js   # Authentication business logic
+│   └── users.services.js # User business logic
+│
+├── utils/                 # 🔨 Helper functions
+│   ├── cookies.js        # Cookie utilities
+│   ├── format.js         # Formatting helpers
+│   └── jwt.js           # JWT token handling
+│
+└── validations/           # ✅ Input validation
+    ├── auth.validation.js    # Auth input validation
+    └── users.validation.js   # User input validation
+```
+
+### **🌐 Frontend & Assets**
+```
+public/                    # Static web files
+├── 🏠 index.html          # Landing page
+├── 🔐 signin.html         # Sign-in page
+├── 📝 signup.html         # Sign-up page  
+├── ✅ welcome.html        # Welcome page
+├── 🎨 styles.css          # Styling
+├── ⚡ common.js           # Shared JavaScript
+├── 🔑 signin.js           # Sign-in logic
+└── 📋 signup.js           # Sign-up logic
+```
+
+### **🧪 Testing & Quality**
+```
+tests/                     # Test files
+└── 📊 app.test.js         # Application tests
+
+coverage/                  # Test coverage reports
+├── 📈 lcov.info          # Coverage data
+├── 📋 coverage-final.json # Coverage summary
+└── 📊 lcov-report/       # HTML coverage report
+```
+
+### **🗄️ Database & Storage** 
+```
+drizzle/                   # Database migrations
+├── 🔄 *.sql              # Migration files
+└── meta/                 # Migration metadata
+
+logs/                      # Application logs
+└── 📝 error.lg           # Error logs
+
+.neon_local/              # Neon database local proxy
+└── 🌿 .branches          # Local branch data
+```
+
+### **🚀 DevOps & Automation**
+```
+.github/workflows/         # GitHub Actions CI/CD
+├── 🐳 docker-build-and-push.yml # Docker deployment
+├── ✨ lint-and-format.yml       # Code quality checks
+└── 🧪 tests.yml                 # Automated testing
+
+scripts/                   # Automation scripts
+├── 🛠️ dev.sh             # Development setup
+├── 🚀 prod.sh            # Production deployment  
+└── 🧪 smoke-tests.sh     # Post-deploy validation
+```
+
+---
+
 ## 🎯 First Time Setup
 
 ### 1. Get Neon Credentials
