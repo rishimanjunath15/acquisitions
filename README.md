@@ -14,7 +14,7 @@ A Node.js Express API with Neon Database integration, featuring ephemeral databa
 ✅ **Security Scanning** - Vulnerability detection with Trivy  
 ✅ **Multi-platform Builds** - AMD64 & ARM64 support  
 ✅ **Ephemeral Databases** - Fresh database branches for development  
-✅ **Professional Frontend** - Responsive authentication interface  
+✅ **Professional Frontend** - Responsive authentication interface
 
 ---
 
@@ -246,11 +246,12 @@ This project includes a professional CI/CD pipeline with GitHub Actions that aut
 ✅ **Multi-platform Builds** - AMD64 & ARM64 Docker images  
 ✅ **Security Scanning** - Vulnerability detection with Trivy  
 ✅ **Smart Deployment** - Environment-specific deployments  
-✅ **Rollback Support** - Tagged images for easy rollback  
+✅ **Rollback Support** - Tagged images for easy rollback
 
 ### **⚡ Quick Setup**
 
 1. **Add GitHub Secrets** (Settings → Secrets and Variables → Actions):
+
    ```
    DOCKER_USERNAME = your-dockerhub-username
    DOCKER_PASSWORD = your-dockerhub-token
@@ -262,19 +263,19 @@ This project includes a professional CI/CD pipeline with GitHub Actions that aut
 
 ### **📋 Pipeline Stages**
 
-| Stage | Trigger | Actions |
-|-------|---------|---------|
-| 🧪 **Test & Build** | Every push/PR | Tests, lint, Docker build |
-| 🔒 **Security Scan** | Main branch | Vulnerability scanning |
-| 🚀 **Deploy** | Main branch | Deploy to environment |
-| 📊 **Notify** | Always | Status notifications |
+| Stage                | Trigger       | Actions                   |
+| -------------------- | ------------- | ------------------------- |
+| 🧪 **Test & Build**  | Every push/PR | Tests, lint, Docker build |
+| 🔒 **Security Scan** | Main branch   | Vulnerability scanning    |
+| 🚀 **Deploy**        | Main branch   | Deploy to environment     |
+| 📊 **Notify**        | Always        | Status notifications      |
 
 ### **🔧 Manual Deployment**
 
 Deploy to specific environments manually:
 
 1. Go to **Actions** → **CI/CD Pipeline**
-2. Click **"Run workflow"** 
+2. Click **"Run workflow"**
 3. Choose environment: `development`, `staging`, or `production`
 4. Click **"Run workflow"**
 

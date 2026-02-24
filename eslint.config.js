@@ -33,6 +33,39 @@ export default [
     },
   },
   {
+    files: ['public/**/*.js'],
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        fetch: 'readonly',
+        console: 'readonly',
+        alert: 'readonly',
+        confirm: 'readonly',
+        prompt: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        FormData: 'readonly',
+        // Global functions and variables used across frontend files
+        displayResponse: 'writable',
+        makeRequest: 'writable',
+        API_BASE: 'writable',
+        AuthManager: 'writable',
+        auth: 'writable',
+        signinForm: 'writable',
+        signupForm: 'writable',
+      },
+    },
+    rules: {
+      'no-unused-vars': 'off', // Frontend files may define globals for other files
+      'no-undef': 'off', // Disable for frontend files that share globals
+    },
+  },
+  {
     files: ['tests/**/*.js'],
     languageOptions: {
       globals: {

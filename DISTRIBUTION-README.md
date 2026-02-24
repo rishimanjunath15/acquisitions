@@ -7,9 +7,11 @@
 ## ⚡ **Super Quick Setup** (2 minutes)
 
 ### **Step 1: Install Docker**
+
 Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/) for your operating system.
 
 ### **Step 2: Get Project Files**
+
 ```bash
 # Option A: Clone repository
 git clone https://github.com/yourusername/acquisitions-api.git
@@ -20,15 +22,17 @@ cd acquisitions-api
 ```
 
 ### **Step 3: Run Everything**
+
 ```bash
 # Windows PowerShell
 .\quick-setup.ps1
 
-# Mac/Linux Terminal  
+# Mac/Linux Terminal
 docker-compose -f docker-compose.dev.yml up -d --build
 ```
 
 ### **Step 4: Open Your App**
+
 🌐 **Visit:** http://localhost:3000
 
 ---
@@ -36,24 +40,28 @@ docker-compose -f docker-compose.dev.yml up -d --build
 ## 🎯 **What You Get**
 
 ✅ **Professional Authentication System**
+
 - Sign up and sign in pages
-- JWT token-based authentication  
+- JWT token-based authentication
 - Secure password handling
 - Session management
 
 ✅ **Production-Ready API**
+
 - RESTful endpoints
 - Security middleware (Arcjet, Helmet)
 - Health monitoring
 - Error handling
 
 ✅ **Modern Frontend**
+
 - Responsive design
 - Professional styling
 - Form validation
 - User dashboard
 
 ✅ **Database Included**
+
 - PostgreSQL with Neon Cloud
 - Automatic migrations
 - User management
@@ -74,6 +82,7 @@ curl http://localhost:3000/health
 ```
 
 **Expected Response:**
+
 ```json
 {"message":"Acquisitions API is running!"}
 {"status":"OK","uptime":123.45}
@@ -87,7 +96,7 @@ curl http://localhost:3000/health
 # Start application
 docker-compose -f docker-compose.dev.yml up -d
 
-# Stop application  
+# Stop application
 docker-compose -f docker-compose.dev.yml down
 
 # View logs
@@ -104,14 +113,17 @@ docker-compose -f docker-compose.dev.yml ps
 **Common Issues:**
 
 🔧 **"Docker not found"**
+
 - Install Docker Desktop and ensure it's running
 - Run `docker --version` to verify installation
 
 🔧 **"Port already in use"**
+
 - Stop existing containers: `docker-compose -f docker-compose.dev.yml down`
 - Or change port in `docker-compose.dev.yml`
 
-🔧 **"Container won't start"**  
+🔧 **"Container won't start"**
+
 - Check logs: `docker-compose -f docker-compose.dev.yml logs`
 - Ensure `.env` file exists with proper credentials
 
@@ -134,6 +146,7 @@ acquisitions-api/
 ## ✨ **The Magic of Docker**
 
 **Why this works everywhere:**
+
 - 🔒 **Isolated**: Runs in its own container
 - 📦 **Portable**: Same environment on every computer
 - 🚀 **Fast**: No manual setup of dependencies

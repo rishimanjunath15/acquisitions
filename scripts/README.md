@@ -7,21 +7,24 @@ This directory contains scripts and tools for development, testing, and deployme
 ## 📁 **Scripts Overview**
 
 ### **🐳 dev.sh**
+
 - **Purpose:** Start development environment with Docker
 - **Usage:** `npm run dev:docker` or `./scripts/dev.sh`
 - **Features:** Hot-reloading, development database
 
-### **🚀 prod.sh** 
+### **🚀 prod.sh**
+
 - **Purpose:** Start production environment with Docker
 - **Usage:** `npm run prod:docker` or `./scripts/prod.sh`
 - **Features:** Production-optimized, Neon Cloud database
 
 ### **🧪 smoke-tests.sh**
+
 - **Purpose:** Post-deployment verification tests
 - **Usage:** `./scripts/smoke-tests.sh`
-- **Features:** 
+- **Features:**
   - Health check validation
-  - API endpoint testing  
+  - API endpoint testing
   - Frontend accessibility check
   - Performance monitoring
   - Static file verification
@@ -33,21 +36,25 @@ This directory contains scripts and tools for development, testing, and deployme
 The smoke test script performs comprehensive checks:
 
 ### **✅ Health Verification**
+
 - Tests `/health` endpoint for proper JSON response
 - Validates uptime information
 - Checks response time performance
 
 ### **🔌 API Testing**
+
 - Tests main API endpoints
 - Validates authentication endpoint structure
 - Checks error handling
 
 ### **🌐 Frontend Testing**
+
 - Verifies frontend page loads (HTTP 200)
 - Tests static CSS file accessibility
 - Optional API documentation check
 
 ### **📊 Performance Checks**
+
 - Measures response time
 - Alerts on slow responses (>2s)
 - Reports application uptime
@@ -67,6 +74,7 @@ These scripts integrate with your GitHub Actions pipeline:
 ```
 
 ### **Environment Variables**
+
 - `APP_URL` - The URL of your deployed application (default: http://localhost:3000)
 - `MAX_RETRIES` - Number of retry attempts (default: 30)
 - `RETRY_INTERVAL` - Seconds between retries (default: 10)
@@ -76,6 +84,7 @@ These scripts integrate with your GitHub Actions pipeline:
 ## 🔧 **Local Development**
 
 ### **Run Smoke Tests Locally**
+
 ```bash
 # Test local development server
 ./scripts/smoke-tests.sh
@@ -88,6 +97,7 @@ APP_URL=https://your-app.herokuapp.com ./scripts/smoke-tests.sh
 ```
 
 ### **Make Scripts Executable**
+
 ```bash
 chmod +x scripts/*.sh
 ```
@@ -102,7 +112,7 @@ To add new smoke tests, edit `smoke-tests.sh`:
 # Add new endpoint test
 test_endpoint "/api/new-feature" "200" "New Feature Endpoint" || exit 1
 
-# Add new JSON response test  
+# Add new JSON response test
 test_json_endpoint "/api/status" "version" "Version Information" || exit 1
 ```
 

@@ -2,8 +2,8 @@
 # 🧪 CI/CD Pipeline Test Script
 # Tests all components that the CI/CD pipeline will run
 
-Write-Host "🚀 CI/CD Pipeline Component Test" -ForegroundColor Cyan
-Write-Host "=================================" -ForegroundColor Cyan
+Write-Host "CI/CD Pipeline Component Test" -ForegroundColor Cyan
+Write-Host "================================" -ForegroundColor Cyan
 
 $ErrorCount = 0
 $TestCount = 0
@@ -34,7 +34,7 @@ function Test-Component {
 }
 
 # Test 1: Node.js Dependencies
-Test-Component "📦 Dependencies" {
+Test-Component "Dependencies" {
     Write-Host "   Checking if node_modules exists..."
     if (Test-Path "node_modules") {
         Write-Host "   ✅ node_modules found"
@@ -45,25 +45,25 @@ Test-Component "📦 Dependencies" {
 } "Install and verify Node.js dependencies"
 
 # Test 2: Code Linting
-Test-Component "🔍 Code Linting" {
+Test-Component "Code Linting" {
     Write-Host "   Running ESLint..."
     npm run lint
 } "Check code quality and style"
 
 # Test 3: Unit Tests
-Test-Component "🧪 Unit Tests" {
+Test-Component "Unit Tests" {
     Write-Host "   Running Jest tests..."
     npm test
 } "Execute application unit tests"
 
 # Test 4: Docker Build
-Test-Component "🐳 Docker Build" {
+Test-Component "Docker Build" {
     Write-Host "   Building Docker image..."
     docker build -t test-ci-acquisitions-api .
 } "Build Docker container image"
 
 # Test 5: Container Health
-Test-Component "💉 Container Health" {
+Test-Component "Container Health" {
     Write-Host "   Starting container..."
     $containerId = docker run -d -p 3001:3000 test-ci-acquisitions-api
     
@@ -92,7 +92,7 @@ Test-Component "💉 Container Health" {
 } "Test container startup and health"
 
 # Test 6: Pipeline File Validation
-Test-Component "⚙️ Pipeline Config" {
+Test-Component "Pipeline Config" {
     Write-Host "   Validating GitHub Actions workflow..."
     if (Test-Path "docker-build-and-push.yaml") {
         $yamlContent = Get-Content "docker-build-and-push.yaml" -Raw
@@ -107,7 +107,7 @@ Test-Component "⚙️ Pipeline Config" {
 } "Validate GitHub Actions workflow file"
 
 # Test 7: Environment Configuration
-Test-Component "🔧 Environment Config" {
+Test-Component "Environment Config" {
     Write-Host "   Checking environment files..."
     
     $files = @(".env.development", "docker-compose.dev.yml", "Dockerfile")
@@ -131,7 +131,7 @@ try {
 
 # Summary
 Write-Host "`n" + "="*50 -ForegroundColor Cyan
-Write-Host "🎯 CI/CD PIPELINE TEST SUMMARY" -ForegroundColor Cyan
+Write-Host "CI/CD PIPELINE TEST SUMMARY" -ForegroundColor Cyan
 Write-Host "="*50 -ForegroundColor Cyan
 
 if ($ErrorCount -eq 0) {

@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
     logger.info('API call to root endpoint');
     return res.status(200).json({ message: 'hello from acquisitions API' });
   }
-  
+
   // Browser request - serve the frontend
   logger.info('Browser request - serving frontend');
   res.sendFile('index.html', { root: 'public' });
