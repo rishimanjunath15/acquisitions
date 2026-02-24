@@ -2,3 +2,19 @@ node_modules
 .env
 .env.*
 .neon_local/
+
+# Generated files
+coverage/
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Docker volumes
+.docker/
