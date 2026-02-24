@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acquisitions API - Authentication</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Acquisitions API</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="signin.html">Sign In</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="hero-section">
+            <h1>🌟 Welcome to Acquisitions API</h1>
+            <p>Please sign in to continue to your account</p>
+            <div class="hero-buttons">
+                <a href="signin.html" class="btn btn-primary">Sign In</a>
+                <a href="signup.html" class="btn btn-secondary">Create Account</a>
+            </div>
+        </header>
+    </div>
+
+    <script>
+        // Check if user is already logged in
+        const authToken = localStorage.getItem('authToken');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        if (authToken && currentUser) {
+            window.location.href = 'welcome.html';
+        }
+    </script>
+</body>
+</html>

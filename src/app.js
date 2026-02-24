@@ -21,16 +21,20 @@ app.use(
 app.use(securityMiddleware);
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  morgan('combined', {
-    stream: { write: message => logger.info(message.trim()) },
-  })
-);
-
 app.get('/', (req, res) => {
-  logger.info('hello from acquisitions!');
-  res.status(200).send('hello from acquisitions');
+  // Check if request accepts JSON (API call) vs HTML (browser)
+  if (req.accepts('json') && !req.accepts('html')) {
+    logger.info('API call to root endpoint');
+    return res.status(200).json({ message: 'hello from acquisitions API' });
+  }
+  
+  // Browser request - serve the frontend
+  logger.info('Browser request - serving frontend');
+  res.sendFile('index.html', { root: 'public' });
 });
+
+// Serve static files from public directory
+app.use(express.static('public'));
 
 app.get('/health', (req, res) => {
   res.status(200).json({

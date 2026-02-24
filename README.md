@@ -1,10 +1,22 @@
-<<<<<<< HEAD
-# Acquisitions API `1122222
-========
-# Acquisitions API `11 1
->>>>>>> 7b788514866d81f5f323bbe0b399ca70364e3f94
+# Acquisitions API
 
-A Node.js Express API with Neon Database integration, featuring ephemeral database branches for development and production-ready Docker configuration.
+![CI/CD Pipeline](https://github.com/yourusername/acquisitions-api/actions/workflows/docker-build-and-push.yaml/badge.svg)
+![Docker Image](https://img.shields.io/docker/image-size/yourusername/acquisitions-api?label=Docker%20Image)
+![Security](https://img.shields.io/badge/Security-Trivy%20Scan-green)
+
+A Node.js Express API with Neon Database integration, featuring ephemeral database branches for development and production-ready Docker configuration with automated CI/CD pipeline.
+
+## 🎯 **Features**
+
+✅ **Authentication System** - JWT-based with secure signup/signin  
+✅ **Docker Containerization** - Development & production ready  
+✅ **CI/CD Pipeline** - Automated testing, building, and deployment  
+✅ **Security Scanning** - Vulnerability detection with Trivy  
+✅ **Multi-platform Builds** - AMD64 & ARM64 support  
+✅ **Ephemeral Databases** - Fresh database branches for development  
+✅ **Professional Frontend** - Responsive authentication interface  
+
+---
 
 ## 🚀 Quick Start
 
@@ -221,6 +233,54 @@ docker-compose -f docker-compose.dev.yml exec app npm run db:migrate
 Check `DELETE_BRANCH=true` in `.env` and ensure you're stopping containers properly.
 
 For more troubleshooting, see [DOCKER-SETUP.md](./DOCKER-SETUP.md#troubleshooting).
+
+---
+
+## 🚀 CI/CD Pipeline
+
+This project includes a professional CI/CD pipeline with GitHub Actions that automatically tests, builds, scans, and deploys your application.
+
+### **🎯 Pipeline Features**
+
+✅ **Automated Testing** - Runs on every push and PR  
+✅ **Multi-platform Builds** - AMD64 & ARM64 Docker images  
+✅ **Security Scanning** - Vulnerability detection with Trivy  
+✅ **Smart Deployment** - Environment-specific deployments  
+✅ **Rollback Support** - Tagged images for easy rollback  
+
+### **⚡ Quick Setup**
+
+1. **Add GitHub Secrets** (Settings → Secrets and Variables → Actions):
+   ```
+   DOCKER_USERNAME = your-dockerhub-username
+   DOCKER_PASSWORD = your-dockerhub-token
+   ```
+
+2. **Push to main branch** - Pipeline runs automatically!
+
+3. **Monitor progress** - Check GitHub Actions tab
+
+### **📋 Pipeline Stages**
+
+| Stage | Trigger | Actions |
+|-------|---------|---------|
+| 🧪 **Test & Build** | Every push/PR | Tests, lint, Docker build |
+| 🔒 **Security Scan** | Main branch | Vulnerability scanning |
+| 🚀 **Deploy** | Main branch | Deploy to environment |
+| 📊 **Notify** | Always | Status notifications |
+
+### **🔧 Manual Deployment**
+
+Deploy to specific environments manually:
+
+1. Go to **Actions** → **CI/CD Pipeline**
+2. Click **"Run workflow"** 
+3. Choose environment: `development`, `staging`, or `production`
+4. Click **"Run workflow"**
+
+**📖 Complete Setup Guide:** [CICD-SETUP.md](./CICD-SETUP.md)
+
+---
 
 ## 📦 Tech Stack
 

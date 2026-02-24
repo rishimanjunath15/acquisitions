@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Acquisitions API</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>🚀 Acquisitions API</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><button id="signoutBtn" class="btn btn-danger btn-sm">Sign Out</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="authRequired" class="auth-required">
+            <div class="auth-message">
+                <h2>🔒 Access Denied</h2>
+                <p>Please sign in to access this page</p>
+                <div class="auth-actions">
+                    <a href="signin.html" class="btn btn-primary">Sign In</a>
+                    <a href="signup.html" class="btn btn-secondary">Create Account</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="welcomeContent" class="welcome-content hidden">
+            <div class="welcome-header">
+                <div class="welcome-icon">👋</div>
+                <h1 class="welcome-title">Hello, <span id="userName"></span>!</h1>
+                <h2 class="welcome-subtitle">Welcome to Your Acquisitions API Portal</h2>
+                <p class="welcome-message">We're delighted to have you here. You have successfully accessed your secure account.</p>
+            </div>
+
+            <div class="user-details-section">
+                <div class="user-card">
+                    <h3>📋 Account Information</h3>
+                    <div class="user-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Full Name:</span>
+                            <span class="detail-value" id="displayName"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Email Address:</span>
+                            <span class="detail-value" id="displayEmail"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Account Status:</span>
+                            <span class="detail-value status-active">✅ Active</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Login Time:</span>
+                            <span class="detail-value" id="loginTime"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="session-info">
+                    <h3>🔐 Session Information</h3>
+                    <div class="session-details">
+                        <p><strong>Session Status:</strong> <span class="session-active">Active & Secure</span></p>
+                        <p><strong>Authentication:</strong> <span class="auth-verified">✓ Verified</span></p>
+                        <p><strong>Access Level:</strong> <span class="access-level">Standard User</span></p>
+                    </div>
+                    
+                    <div class="session-actions">
+                        <button id="refreshSession" class="btn btn-secondary">🔄 Refresh Session</button>
+                        <button id="signoutMainBtn" class="btn btn-danger">🚪 Sign Out</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="welcome-footer">
+                <div class="footer-message">
+                    <p><strong>Security Notice:</strong> For your protection, please sign out when finished and never share your login credentials.</p>
+                    <p><strong>Support:</strong> If you need assistance, please contact our support team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+        let auth = {
+            token: localStorage.getItem('authToken'),
+            user: JSON.parse(localStorage.getItem('currentUser'))
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthentication();
+            setupEventListeners();
+        });
+
+        function checkAuthentication() {
+            const authRequired = document.getElementById('authRequired');
+            const welcomeContent = document.getElementById('welcomeContent');
+            
+            if (!auth.token || !auth.user) {
+                authRequired.classList.remove('hidden');
+                welcomeContent.classList.add('hidden');
+                return;
+            }
+            
+            // User is authenticated, show welcome content
+            authRequired.classList.add('hidden');
+            welcomeContent.classList.remove('hidden');
+            
+            // Populate user information
+            displayUserInfo();
+        }
+
+        function displayUserInfo() {
+            const user = auth.user;
+            
+            document.getElementById('userName').textContent = user.name || 'User';
+            document.getElementById('displayName').textContent = user.name || 'Not provided';
+            document.getElementById('displayEmail').textContent = user.email || 'Not provided';
+            document.getElementById('loginTime').textContent = new Date().toLocaleString();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('signoutBtn').addEventListener('click', handleSignout);
+            document.getElementById('signoutMainBtn').addEventListener('click', handleSignout);
+            document.getElementById('refreshSession').addEventListener('click', refreshSession);
+        }
+
+        async function handleSignout() {
+            try {
+                await fetch(`${API_BASE}/api/auth/signout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+            } catch (error) {
+                console.log('Signout request failed, but proceeding with local cleanup');
+            }
+            
+            // Clear local storage
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            
+            // Redirect to sign in page
+            window.location.href = 'signin.html';
+        }
+
+        function refreshSession() {
+            // Simple refresh - just update the login time
+            document.getElementById('loginTime').textContent = new Date().toLocaleString();
+            
+            // Create a temporary message
+            const refreshBtn = document.getElementById('refreshSession');
+            const originalText = refreshBtn.textContent;
+            refreshBtn.textContent = '✅ Refreshed!';
+            refreshBtn.disabled = true;
+            
+            setTimeout(() => {
+                refreshBtn.textContent = originalText;
+                refreshBtn.disabled = false;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

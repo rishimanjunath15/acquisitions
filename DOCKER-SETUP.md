@@ -1,286 +1,187 @@
-# Docker Setup Guide with Neon Database
+# 🐳 Docker Setup Guide - Simple & Quick
 
-This guide explains how to run your application with Docker using different database configurations for development and production.
-
-## Overview
-
-- **Development**: Uses Neon Local proxy with ephemeral database branches
-- **Production**: Connects directly to Neon Cloud Database
-
-## Prerequisites
-
-1. **Docker & Docker Compose** installed
-2. **Neon Account** with a project created at [console.neon.tech](https://console.neon.tech)
-3. **Neon API Key** - Get it from: [Neon Console → Account Settings → API Keys](https://console.neon.tech/app/settings/api-keys)
-4. **Neon Project ID** - Found in: Project Settings → General
+Run your Acquisitions API anywhere with Docker! This guide gets you up and running in 5 minutes.
 
 ---
 
-## Development Environment (Local with Neon Local)
+## 🚀 Quick Start (2 Steps)
 
-### What is Neon Local?
+### **Step 1: Install Docker**
+Download [Docker Desktop](https://www.docker.com/products/docker-desktop/) and make sure it's running.
 
-Neon Local is a Docker proxy that creates ephemeral database branches automatically. Each time you start the container, it creates a fresh copy of your database. When you stop the container, the branch is deleted.
+### **Step 2: Start Your App**
+```bash
+# Copy environment file  
+cp .env.development .env
 
-### Setup Steps
+# Start everything
+docker-compose -f docker-compose.dev.yml up -d --build
 
-1. **Copy the development environment template:**
-
-   ```bash
-   cp .env.development .env
-   ```
-
-2. **Update `.env` with your Neon credentials:**
-
-   ```env
-   NEON_API_KEY=neon_api_xxxxxxxxxxxxx
-   NEON_PROJECT_ID=your-project-id
-   PARENT_BRANCH_ID=main
-   ARCJET_KEY=your_arcjet_key
-   ```
-
-3. **Start the development environment:**
-
-   ```bash
-   docker-compose -f docker-compose.dev.yml up --build
-   ```
-
-   This will:
-   - Start the Neon Local proxy
-   - Create an ephemeral database branch from `main`
-   - Start your application connected to the ephemeral branch
-   - Enable hot-reloading (changes to `src/` are reflected immediately)
-
-4. **Access your application:**
-   - Application: http://localhost:3000
-   - Database: `postgres://neon:npg@localhost:5432/neondb?sslmode=require`
-
-5. **Stop the environment:**
-   ```bash
-   docker-compose -f docker-compose.dev.yml down
-   ```
-   The ephemeral database branch will be automatically deleted.
-
-### Development Configuration Details
-
-**docker-compose.dev.yml** includes:
-
-- **neon-local service**: Proxy that manages ephemeral branches
-  - Creates a new branch on startup
-  - Deletes the branch on shutdown
-  - Persists branch-per-git-branch (optional feature)
-- **app service**: Your Node.js application
-  - Connects to `neon-local:5432`
-  - Source code mounted for hot-reloading
-  - Runs with `npm run dev`
-
-### Persistent Branches per Git Branch
-
-The setup includes optional volume mounts that persist a unique branch for each Git branch:
-
-```yaml
-volumes:
-  - ./.neon_local/:/tmp/.neon_local
-  - ./.git/HEAD:/tmp/.git/HEAD:ro
+# Open your app
+# Visit: http://localhost:3000
 ```
 
-This means:
-
-- Each Git branch gets its own database branch
-- Switching Git branches automatically switches database branches
-- Branches persist across container restarts (unless `DELETE_BRANCH=true`)
+**That's it!** 🎉 Your app is running with database included.
 
 ---
 
-## Production Environment (Neon Cloud)
+## ⚙️ Configuration (One-Time Setup)
 
-### Setup Steps
+**Edit your `.env` file with your credentials:**
+```env
+NEON_API_KEY=neon_api_xxxxxxxxxxxxx
+NEON_PROJECT_ID=your-project-id  
+ARCJET_KEY=your_arcjet_key
+```
 
-1. **Copy the production environment template:**
+**Get these from:**
+- **Neon API Key**: [Neon Console → API Keys](https://console.neon.tech/app/settings/api-keys)
+- **Project ID**: [Neon Console → Project Settings](https://console.neon.tech)
+- **Arcjet Key**: [Arcjet Dashboard](https://app.arcjet.com)
 
+---
+
+## 🎯 What You Get
+
+**✅ Complete Development Environment:**
+- Your Node.js API (port 3000)
+- Fresh PostgreSQL database (auto-created)
+- Hot-reloading (code changes reload instantly)
+- Professional frontend included
+
+**✅ Two Docker Containers:**
+- `app-dev` - Your Acquisitions API
+- `neon-local-dev` - Database proxy
+
+---
+
+## 🌍 Run on Any Computer
+
+**Transfer your app to another computer:**
+
+### **Method 1: Copy Project Folder**
+1. Copy entire project folder to new computer
+2. Install Docker Desktop on new computer
+3. Run: `docker-compose -f docker-compose.dev.yml up -d --build`
+4. Done! Same app, same experience.
+
+### **Method 2: Use Git**
+```bash
+git clone https://github.com/yourusername/acquisitions-api.git
+cd acquisitions-api
+docker-compose -f docker-compose.dev.yml up -d --build
+```
+
+**✅ No installation needed:** Node.js, PostgreSQL, or npm - Docker handles everything!
+
+---
+
+## 🧪 Test Your App
+
+**Check if everything is working:**
+```bash
+# Test API
+curl http://localhost:3000/api
+# Expected: {"message":"Acquisitions API is running!"}
+
+# Test health
+curl http://localhost:3000/health  
+# Expected: {"status":"OK","uptime":123.45}
+
+# Open frontend
+# Visit: http://localhost:3000
+```
+
+**PowerShell version:**
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api" -Method Get
+Start-Process "http://localhost:3000"
+```
+
+---
+
+## 📋 Essential Commands
+
+### **Daily Use**
+```bash
+# Start your app
+docker-compose -f docker-compose.dev.yml up -d
+
+# Stop your app
+docker-compose -f docker-compose.dev.yml down
+
+# View logs
+docker-compose -f docker-compose.dev.yml logs -f
+
+# Check container status
+docker-compose -f docker-compose.dev.yml ps
+```
+
+### **Database Commands**
+```bash
+# Run database migrations
+docker-compose -f docker-compose.dev.yml exec app npm run db:migrate
+
+# Open database admin panel
+docker-compose -f docker-compose.dev.yml exec app npm run db:studio
+```
+
+---
+
+## 🆘 Common Issues & Fixes
+
+### **"Docker not found" Error**
+```bash
+# Install Docker Desktop from: https://docker.com
+# Make sure Docker Desktop is running
+docker --version  # Test if working
+```
+
+### **"Port already in use" Error**
+```bash
+# Stop existing containers
+docker-compose -f docker-compose.dev.yml down
+
+# Or kill all Docker processes
+docker system prune -f
+```
+
+### **"Container won't start" Error**
+```bash
+# Check what went wrong
+docker-compose -f docker-compose.dev.yml logs
+
+# Make sure .env file exists with your credentials
+```
+
+### **"Database connection failed" Error**
+- Check your `.env` file has correct `NEON_API_KEY` and `NEON_PROJECT_ID`
+- Wait 30 seconds for database to initialize
+- Check logs: `docker-compose -f docker-compose.dev.yml logs neon-local-dev`
+
+---
+
+## 🎯 Production Setup (Optional)
+
+**For production deployment:**
+
+1. **Create production config:**
    ```bash
    cp .env.production .env.production.local
    ```
 
-2. **Update `.env.production.local` with your Neon Cloud credentials:**
-
+2. **Edit `.env.production.local`:**
    ```env
    NODE_ENV=production
-   LOG_LEVEL=warn
-   DATABASE_URL=postgresql://user:password@ep-xxxxx.neon.tech/neondb?sslmode=require
+   DATABASE_URL=postgresql://user:pass@your-neon-cloud.neon.tech/db
    ARCJET_KEY=your_arcjet_key
    ```
 
-   > ⚠️ **Security**: Never commit `.env.production.local` to version control
-
-3. **Start the production environment:**
-
+3. **Start production:**
    ```bash
-   docker-compose -f docker-compose.prod.yml --env-file .env.production.local up --build -d
+   docker-compose -f docker-compose.prod.yml --env-file .env.production.local up -d
    ```
 
-4. **Check logs:**
-
-   ```bash
-   docker-compose -f docker-compose.prod.yml logs -f app
-   ```
-
-5. **Stop the production environment:**
-   ```bash
-   docker-compose -f docker-compose.prod.yml down
-   ```
-
-### Production Configuration Details
-
-**docker-compose.prod.yml** includes:
-
-- **app service only**: No Neon Local proxy
-  - Connects directly to Neon Cloud via `DATABASE_URL`
-  - Production optimizations enabled
-  - Health checks configured
-  - Auto-restart policy
-
 ---
 
-## Environment Variables Reference
-
-### Development Variables (.env.development)
-
-| Variable           | Description                          | Required | Default       |
-| ------------------ | ------------------------------------ | -------- | ------------- |
-| `NEON_API_KEY`     | Your Neon API key                    | Yes      | -             |
-| `NEON_PROJECT_ID`  | Your Neon project ID                 | Yes      | -             |
-| `PARENT_BRANCH_ID` | Parent branch for ephemeral branches | No       | `main`        |
-| `DELETE_BRANCH`    | Auto-delete branches on shutdown     | No       | `true`        |
-| `DATABASE_URL`     | Local database connection string     | No       | Auto-set      |
-| `NODE_ENV`         | Environment mode                     | No       | `development` |
-| `LOG_LEVEL`        | Logging verbosity                    | No       | `info`        |
-| `ARCJET_KEY`       | Arcjet security key                  | Yes      | -             |
-
-### Production Variables (.env.production)
-
-| Variable       | Description                  | Required |
-| -------------- | ---------------------------- | -------- |
-| `DATABASE_URL` | Neon Cloud connection string | Yes      |
-| `NODE_ENV`     | Environment mode             | Yes      |
-| `LOG_LEVEL`    | Logging verbosity            | No       |
-| `ARCJET_KEY`   | Arcjet security key          | Yes      |
-
----
-
-## Database Connection Strings
-
-### Development (Neon Local)
-
-```
-postgres://neon:npg@neon-local:5432/neondb?sslmode=require
-```
-
-- **Username**: `neon`
-- **Password**: `npg`
-- **Host**: `neon-local` (Docker service name)
-- **Port**: `5432`
-
-### Production (Neon Cloud)
-
-```
-postgresql://user:password@ep-xxxxx.neon.tech/neondb?sslmode=require
-```
-
-- Get this from Neon Console → Connection Details
-
----
-
-## Troubleshooting
-
-### Issue: "Connection refused" in development
-
-**Solution**: Wait for Neon Local to be healthy. The app service has a `depends_on` healthcheck, but you can manually check:
-
-```bash
-docker-compose -f docker-compose.dev.yml ps
-```
-
-### Issue: Self-signed certificate error
-
-**Solution**: This is expected with Neon Local. The connection string uses `sslmode=require` which is compatible with self-signed certificates. If using the `pg` library directly in Node.js, you may need:
-
-```javascript
-ssl: {
-  rejectUnauthorized: false;
-}
-```
-
-### Issue: Branches not cleaning up
-
-**Solution**: Ensure `DELETE_BRANCH=true` in your `.env` file. Check orphaned branches:
-
-```bash
-# List all branches in your Neon project
-curl -X GET https://console.neon.tech/api/v2/projects/{project_id}/branches \
-  -H "Authorization: Bearer {api_key}"
-```
-
-### Issue: Production connection timeout
-
-**Solution**: Verify your Neon Cloud connection string and ensure your deployment environment can reach `neon.tech` domains. Check firewall rules if running in a restricted network.
-
----
-
-## Running Database Migrations
-
-### Development
-
-```bash
-# Generate migrations
-docker-compose -f docker-compose.dev.yml exec app npm run db:generate
-
-# Run migrations
-docker-compose -f docker-compose.dev.yml exec app npm run db:migrate
-
-# Open Drizzle Studio
-docker-compose -f docker-compose.dev.yml exec app npm run db:studio
-```
-
-### Production
-
-```bash
-docker-compose -f docker-compose.prod.yml exec app npm run db:migrate
-```
-
----
-
-## Best Practices
-
-1. **Never commit secrets**: Keep `.env`, `.env.production.local` out of Git
-2. **Use ephemeral branches**: Enable `DELETE_BRANCH=true` for clean dev environments
-3. **Test before production**: Always test migrations on a development branch first
-4. **Monitor connections**: Neon has connection limits - use pooling in production
-5. **Use health checks**: Both compose files include health checks for reliability
-
----
-
-## Additional Resources
-
-- [Neon Local Documentation](https://neon.com/docs/local/neon-local)
-- [Neon Branching Guide](https://neon.com/docs/guides/branching)
-- [Drizzle ORM Documentation](https://orm.drizzle.team)
-- [Docker Compose Documentation](https://docs.docker.com/compose/)
-
----
-
-## Quick Commands Cheat Sheet
-
-```bash
-# Development
-docker-compose -f docker-compose.dev.yml up --build        # Start dev environment
-docker-compose -f docker-compose.dev.yml down              # Stop dev environment
-docker-compose -f docker-compose.dev.yml logs -f app       # View app logs
-docker-compose -f docker-compose.dev.yml exec app sh       # Shell into app container
-
-# Production
-docker-compose -f docker-compose.prod.yml --env-file .env.production.local up -d --build
-docker-compose -f docker-compose.prod.yml down
-docker-compose -f docker-compose.prod.yml logs -f app
-docker-compose -f docker-compose.prod.yml exec app sh
-```
+**🎉 That's it! Your Docker setup is complete and ready to use anywhere!**
