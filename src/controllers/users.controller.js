@@ -11,7 +11,7 @@ import {
 } from '#validations/users.validation.js';
 import { formatValidationError } from '#utils/format.js';
 
-export const fetchAllUsers = async (req, res, next) => {
+export const fetchAllUsers = async (req, res, _next) => {
   try {
     logger.info('Getting users...');
 
@@ -28,7 +28,7 @@ export const fetchAllUsers = async (req, res, next) => {
   }
 };
 
-export const fetchUserById = async (req, res, next) => {
+export const fetchUserById = async (req, res, _next) => {
   try {
     logger.info(`Getting user by id: ${req.params.id}`);
 
@@ -61,7 +61,7 @@ export const fetchUserById = async (req, res, next) => {
   }
 };
 
-export const updateUserById = async (req, res, next) => {
+export const updateUserById = async (req, res, _next) => {
   try {
     logger.info(`Updating user: ${req.params.id}`);
 
@@ -139,7 +139,7 @@ export const updateUserById = async (req, res, next) => {
   }
 };
 
-export const deleteUserById = async (req, res, next) => {
+export const deleteUserById = async (req, res, _next) => {
   try {
     logger.info(`Deleting user: ${req.params.id}`);
 
