@@ -24,7 +24,7 @@ export const fetchAllUsers = async (req, res, next) => {
     });
   } catch (e) {
     logger.error(e);
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -57,7 +57,7 @@ export const fetchUserById = async (req, res, next) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -135,7 +135,7 @@ export const updateUserById = async (req, res, next) => {
       return res.status(409).json({ error: 'Email already exists' });
     }
 
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -193,6 +193,6 @@ export const deleteUserById = async (req, res, next) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };

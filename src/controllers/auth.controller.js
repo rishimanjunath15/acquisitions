@@ -45,7 +45,7 @@ export const signup = async (req, res, next) => {
       return res.status(409).json({ error: 'Email already exist' });
     }
 
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -89,7 +89,7 @@ export const signIn = async (req, res, next) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -103,6 +103,6 @@ export const signOut = async (req, res, next) => {
     });
   } catch (e) {
     logger.error('Sign out error', e);
-    next(e);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };

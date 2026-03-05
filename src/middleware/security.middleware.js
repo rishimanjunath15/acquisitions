@@ -8,6 +8,12 @@ const securityMiddleware = async (req, res, next) => {
     return next();
   }
 
+  // Skip if no IP available (common in some cloud environments)
+  if (!req.ip && !req.headers['x-forwarded-for']) {
+    logger.warn('No IP address available, skipping Arcjet checks');
+    return next();
+  }
+
   try {
     const role = req.user?.role || 'guest';
 
@@ -36,52 +42,22 @@ const securityMiddleware = async (req, res, next) => {
 
     const decision = await client.protect(req);
 
-    if (decision.isDenied() && decision.reason.isBot()) {
-      logger.warn('Bot request blocked', {
-        ip: req.ip,
-        userAgent: req.get('User-Agent'),
-        path: req.path,
-      });
-
-      return res.status(403).json({
-        error: 'Forbidden',
-        message: 'Automated requests are not allowed',
-      });
-    }
-
-    if (decision.isDenied() && decision.reason.isShield()) {
-      logger.warn('Shield Blocked request', {
+    // Never block requests, just log if Arcjet would have denied
+    if (decision.isDenied()) {
+      logger.warn('Arcjet would have denied this request', {
+        reason: decision.reason,
         ip: req.ip,
         userAgent: req.get('User-Agent'),
         path: req.path,
         method: req.method,
       });
-
-      return res.status(403).json({
-        error: 'Forbidden',
-        message: 'Request blocked by security policy',
-      });
     }
-
-    if (decision.isDenied() && decision.reason.isRateLimit()) {
-      logger.warn('Rate limit exceeded', {
-        ip: req.ip,
-        userAgent: req.get('User-Agent'),
-        path: req.path,
-      });
-
-      return res
-        .status(403)
-        .json({ error: 'Forbidden', message: 'Too many requests' });
-    }
-
     next();
   } catch (e) {
+    // Log the error but don't block the request - fail open for availability
     console.error('Arcjet middleware error:', e);
-    res.status(500).json({
-      errro: 'Internal server error',
-      message: 'Something went wrong with security middleware',
-    });
+    logger.warn('Arcjet check failed, allowing request to continue');
+    next();
   }
 };
 export default securityMiddleware;

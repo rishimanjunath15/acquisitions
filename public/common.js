@@ -1,5 +1,6 @@
 // Common JavaScript functionality shared across pages
-const API_BASE = 'http://localhost:3000';
+// Use relative URLs so it works on any server (localhost, AWS, etc.)
+const API_BASE = '';
 
 // Utility functions
 function displayResponse(message, type = 'success') {
