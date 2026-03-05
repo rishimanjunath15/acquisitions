@@ -142,6 +142,7 @@ scripts/                   # Automation scripts
 ### Manual Setup
 
 **Prerequisites:**
+
 - Node.js 20+ → https://nodejs.org/
 - Git → https://git-scm.com/
 
@@ -209,6 +210,7 @@ Then on your phone: `http://192.168.1.100:3000`
 ```
 
 **What you need:**
+
 - ✅ AWS account with CLI configured (`aws configure`)
 - ✅ Your Neon Cloud database URL
 - ✅ Your Arcjet security key
@@ -440,6 +442,7 @@ railway up --detach
 ```
 
 **Environment Variables to Set:**
+
 - `DATABASE_URL` - Your Neon Cloud connection string
 - `ARCJET_KEY` - Your Arcjet security key
 - `PORT` - `3000` (Railway auto-detects)
@@ -458,26 +461,26 @@ railway up --detach
 ```yaml
 name: acquisitions-api
 services:
-- name: api
-  source_dir: /
-  github:
-    repo: yourusername/acquisitions-api
-    branch: main
-  run_command: node src/index.js
-  environment_slug: node-js
-  instance_count: 1
-  instance_size_slug: professional-xs
-  envs:
-  - key: DATABASE_URL
-    scope: RUN_TIME
-    type: SECRET
-  - key: ARCJET_KEY  
-    scope: RUN_TIME
-    type: SECRET
-  - key: PORT
-    scope: RUN_TIME
-    value: "3000"
-  http_port: 3000
+  - name: api
+    source_dir: /
+    github:
+      repo: yourusername/acquisitions-api
+      branch: main
+    run_command: node src/index.js
+    environment_slug: node-js
+    instance_count: 1
+    instance_size_slug: professional-xs
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        type: SECRET
+      - key: ARCJET_KEY
+        scope: RUN_TIME
+        type: SECRET
+      - key: PORT
+        scope: RUN_TIME
+        value: '3000'
+    http_port: 3000
 ```
 
 **Deploy:** Connect GitHub repo at https://cloud.digitalocean.com/apps
@@ -503,6 +506,7 @@ fly deploy
 ```
 
 **Auto-generated `fly.toml`:**
+
 ```toml
 app = "acquisitions-api"
 primary_region = "dfw"
@@ -554,10 +558,11 @@ run:
     env: PORT
   env:
     - name: PORT
-      value: "3000"
+      value: '3000'
 ```
 
 **Deploy via AWS Console:**
+
 1. Go to [AWS App Runner Console](https://console.aws.amazon.com/apprunner/)
 2. **Create service** → **Source: Container registry**
 3. **Container image URI:** `yourusername/acquisitions:latest`
@@ -605,7 +610,7 @@ run:
           "valueFrom": "arn:aws:secretsmanager:us-east-1:YOUR_ACCOUNT:secret:DATABASE_URL"
         },
         {
-          "name": "ARCJET_KEY", 
+          "name": "ARCJET_KEY",
           "valueFrom": "arn:aws:secretsmanager:us-east-1:YOUR_ACCOUNT:secret:ARCJET_KEY"
         }
       ],
@@ -623,6 +628,7 @@ run:
 ```
 
 **Deploy ECS:**
+
 ```bash
 # 1. Store secrets in AWS Secrets Manager
 aws secretsmanager create-secret \
@@ -679,6 +685,7 @@ eb init acquisitions-api --platform docker --region us-east-1
 ```
 
 **Deploy Elastic Beanstalk:**
+
 ```bash
 # Set environment variables
 eb setenv DATABASE_URL="your-neon-connection" ARCJET_KEY="your-arcjet-key" PORT=3000
@@ -735,28 +742,29 @@ Add this to your `.github/workflows/docker-build-and-push.yml`:
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     unzip awscliv2.zip
     sudo ./aws/install
-    
+
     # Update App Runner service
     aws apprunner start-deployment --service-arn ${{ secrets.APPRUNNER_SERVICE_ARN }}
 ```
 
 **Required GitHub Secrets:**
+
 - `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY` 
+- `AWS_SECRET_ACCESS_KEY`
 - `APPRUNNER_SERVICE_ARN` (get from AWS console after first deployment)
 
 ---
 
 #### **💰 AWS Cost Comparison**
 
-| Service | Monthly Cost* | Complexity | Best For |
-|---------|---------------|------------|----------|
-| **App Runner** | ~$15-30 | ⭐ | Quick deployment |
-| **ECS Fargate** | ~$20-40 | ⭐⭐⭐ | Scalable apps |
-| **Elastic Beanstalk** | ~$15-25 | ⭐⭐ | Platform management |
-| **EC2 t3.micro** | ~$8-15 | ⭐⭐⭐⭐ | Full control |
+| Service               | Monthly Cost\* | Complexity | Best For            |
+| --------------------- | -------------- | ---------- | ------------------- |
+| **App Runner**        | ~$15-30        | ⭐         | Quick deployment    |
+| **ECS Fargate**       | ~$20-40        | ⭐⭐⭐     | Scalable apps       |
+| **Elastic Beanstalk** | ~$15-25        | ⭐⭐       | Platform management |
+| **EC2 t3.micro**      | ~$8-15         | ⭐⭐⭐⭐   | Full control        |
 
-*Estimated for low-traffic applications
+\*Estimated for low-traffic applications
 
 **💡 AWS Recommendation:** Start with **App Runner** for simplicity, move to **ECS Fargate** for production scale.
 
@@ -770,7 +778,7 @@ I've created PowerShell scripts to automate your AWS deployment:
 # Option 1: Deploy to AWS App Runner (Easiest)
 .\deploy-aws-apprunner.ps1
 
-# Option 2: Deploy to AWS ECS Fargate (More control)  
+# Option 2: Deploy to AWS ECS Fargate (More control)
 .\deploy-aws-ecs.ps1
 
 # Check status of deployed services
@@ -778,10 +786,11 @@ I've created PowerShell scripts to automate your AWS deployment:
 ```
 
 **What the scripts do:**
+
 - ✅ **Check prerequisites** (AWS CLI, credentials)
-- ✅ **Securely collect** your environment variables 
+- ✅ **Securely collect** your environment variables
 - ✅ **Create AWS resources** automatically
-- ✅ **Deploy your Docker image** 
+- ✅ **Deploy your Docker image**
 - ✅ **Provide live URLs** when ready
 - ✅ **Save deployment info** for future reference
 
@@ -834,11 +843,13 @@ gcloud run deploy acquisitions-api \
 ### 🔧 **Environment Variables for All Platforms**
 
 **Required:**
+
 - `DATABASE_URL` - Get from [Neon Console](https://console.neon.tech)
 - `ARCJET_KEY` - Get from [Arcjet Dashboard](https://app.arcjet.com)
 - `PORT` - Usually `3000` or auto-detected
 
 **Optional:**
+
 - `NODE_ENV=production`
 - `COOKIE_SECRET` - Random string for session security
 
@@ -846,14 +857,14 @@ gcloud run deploy acquisitions-api \
 
 ### 🎯 **Quick Platform Comparison**
 
-| Platform | Cost | Ease | Scale | Global |
-|----------|------|------|-------|---------|
-| **Railway** | $ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐ |
-| **Fly.io** | $ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Digital Ocean** | $$ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **AWS App Runner** | $$ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Azure Container** | $$$ | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Google Cloud Run** | $$ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| Platform             | Cost | Ease       | Scale      | Global     |
+| -------------------- | ---- | ---------- | ---------- | ---------- |
+| **Railway**          | $    | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | ⭐⭐⭐     |
+| **Fly.io**           | $    | ⭐⭐⭐⭐   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Digital Ocean**    | $$   | ⭐⭐⭐⭐   | ⭐⭐⭐⭐   | ⭐⭐⭐     |
+| **AWS App Runner**   | $$   | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Azure Container**  | $$$  | ⭐⭐       | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
+| **Google Cloud Run** | $$   | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
 
 **💡 Recommendation:** Start with **Railway** for simplicity, move to **Fly.io** for global performance.
 
@@ -868,8 +879,9 @@ Your GitHub Actions already build and push Docker images! To enable auto-deploym
 3. **Push to main branch** → Auto-deploys! 🚀
 
 **Example Railway auto-deploy step:**
+
 ```yaml
-- name: Deploy to Railway  
+- name: Deploy to Railway
   run: |
     npm install -g @railway/cli
     railway login --token ${{ secrets.RAILWAY_TOKEN }}

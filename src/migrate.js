@@ -5,7 +5,10 @@ import { migrate } from 'drizzle-orm/neon-http/migrator';
 
 // Configure Neon for local Docker development (neon-local proxy)
 let config = {};
-if (process.env.NODE_ENV === 'development' && process.env.DATABASE_URL?.includes('neon-local')) {
+if (
+  process.env.NODE_ENV === 'development' &&
+  process.env.DATABASE_URL?.includes('neon-local')
+) {
   const neonLocalHost = process.env.NEON_LOCAL_HOST || 'neon-local';
   config = {
     fetchEndpoint: `http://${neonLocalHost}:5432/sql`,

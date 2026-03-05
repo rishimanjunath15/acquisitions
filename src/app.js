@@ -21,13 +21,15 @@ const app = express();
 app.set('trust proxy', true);
 
 // Configure Helmet for HTTP (disable HTTPS-only features for non-HTTPS deployment)
-app.use(helmet({
-  contentSecurityPolicy: false, // Disable CSP that blocks HTTP
-  crossOriginOpenerPolicy: false, // Disable COOP that requires HTTPS
-  crossOriginEmbedderPolicy: false, // Disable COEP
-  originAgentCluster: false, // Disable Origin-Agent-Cluster header
-  strictTransportSecurity: false, // Disable HSTS (requires HTTPS)
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: false, // Disable CSP that blocks HTTP
+    crossOriginOpenerPolicy: false, // Disable COOP that requires HTTPS
+    crossOriginEmbedderPolicy: false, // Disable COEP
+    originAgentCluster: false, // Disable Origin-Agent-Cluster header
+    strictTransportSecurity: false, // Disable HSTS (requires HTTPS)
+  })
+);
 
 app.use(cors());
 app.use(express.json());
