@@ -203,3 +203,6 @@ docker-compose -f docker-compose.dev.yml logs
 ---
 
 **🎉 That's it! Your Docker setup is complete and ready to use anywhere!**
+
+
+docker setup update
